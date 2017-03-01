@@ -1,0 +1,19 @@
+$media: $media-server + 'games/tag-it/';
+$sprite: $media + 'sprites-animations/';
+$image: $media + 'image-assets/';
+$frame: $media + 'frames/';
+$font: $media + 'fonts/';
+
+// colors
+$text-color: #000;
+$white: #fff;
+$blue: #32c4f3;
+$transparent-white: rgba(255, 255, 255, .5);
+
+// fonts
+$default-font: 'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif;
+
+// font sizes
+$small: 25px;
+$medium: 30px;
+$large: 40px;
