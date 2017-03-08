@@ -1,17 +1,22 @@
-import _ from 'lodash';
 import ClassNames from 'classnames';
 
-import MediaCollection from 'shared/components/media_collection/0.1';
-import Selectable from 'shared/components/selectable/0.1';
+let onSelect = function () {
+    this.updateScreenData({
+        key: 'selection',
+        data: {
+            target: 'correct',
+        },
+    });
+};
+
+let getClassNames = function (props, ref) {
+    return ClassNames(ref, {
+        animated: _.get(props, `data.${ref}.playing`),
+        selectable: _.get(props, 'data.media-sequence.complete'),
+    });
+};
 
 export default function (props, ref, key) {
-    function getClassNames(ref2) {
-        return ClassNames(ref2, {
-            animated: _.get(props, `data[${ref2}].playing`),
-            selectable: _.get(props, 'data[\'media-sequence\'].complete'),
-        });
-    }
-
     return (
         <skoash.Screen
             {...props}
@@ -93,7 +98,7 @@ export default function (props, ref, key) {
                 />
             </skoash.MediaSequence>
 
-            <MediaCollection
+            <skoash.MediaCollection
                 play={_.get(props, 'data.selection.target', null)}
                 onPlay={function () {
                     this.media.correct.play();
@@ -107,25 +112,19 @@ export default function (props, ref, key) {
                 }}
             >
                 <skoash.Audio ref="correct" type="sfx" src={`${CMWN.MEDIA.EFFECT}ti-rv-4.mp3`} />
-            </MediaCollection>
+            </skoash.MediaCollection>
 
-            <Selectable
+            <skoash.Selectable
                 chooseOne
-                selectRespond={function (target) {
-                    this.updateGameState({
-                        path: 'selection',
-                        data: {
-                            target
-                        }
-                    });
-                }}
+                onSelect={onSelect}
+                complete
                 list={[
-                    <skoash.ListItem className={getClassNames('kitchen')} correct />,
-                    <skoash.ListItem className={getClassNames('shower')} correct />,
-                    <skoash.ListItem className={getClassNames('bathroom')} correct />,
-                    <skoash.ListItem className={getClassNames('bathtub')} correct />,
-                    <skoash.ListItem className={getClassNames('classroom')} correct />,
-                    <skoash.ListItem className={getClassNames('outdoor')} correct/>
+                    <skoash.ListItem className={getClassNames(props, 'kitchen')} correct />,
+                    <skoash.ListItem className={getClassNames(props, 'shower')} correct />,
+                    <skoash.ListItem className={getClassNames(props, 'bathroom')} correct />,
+                    <skoash.ListItem className={getClassNames(props, 'bathtub')} correct />,
+                    <skoash.ListItem className={getClassNames(props, 'classroom')} correct />,
+                    <skoash.ListItem className={getClassNames(props, 'outdoor')} correct/>
                 ]}
             />
         </skoash.Screen>
